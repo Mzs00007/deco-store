@@ -27,7 +27,7 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   
   return (
     <div className="text-red-600 dark:text-red-400 p-4 rounded-lg bg-red-50 dark:bg-red-900/10">
-      <p>{t('common.error')}</p>
+      <p>{t('common.error')}: {error.message}</p>
       <button
         className="mt-2 text-sm text-red-700 dark:text-red-300 underline"
         onClick={resetErrorBoundary}

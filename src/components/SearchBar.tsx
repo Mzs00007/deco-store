@@ -20,33 +20,44 @@ export default function SearchBar() {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSearch = useCallback(
-    debounce(async (searchQuery: string) => {
-      if (!searchQuery.trim()) {
-        setResults([]);
-        return;
-      }
+  const debouncedSearch = useCallback(
+    (searchQuery: string) => {
+      const search = async () => {
+        if (!searchQuery.trim()) {
+          setResults([]);
+          return;
+        }
 
-      setIsLoading(true);
-      try {
-        // Simulated API call - replace with actual API endpoint
-        const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
-        if (!response.ok) throw new Error('Search failed');
-        const data = await response.json();
-        setResults(data);
-      } catch (error) {
-        console.error('Search error:', error);
-        setResults([]);
-      } finally {
-        setIsLoading(false);
-      }
-    }, 300),
-    []
+        setIsLoading(true);
+        try {
+          // Simulated API call - replace with actual API endpoint
+          const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+          if (!response.ok) throw new Error('Search failed');
+          const data = await response.json();
+          setResults(data);
+        } catch (error) {
+          console.error('Search error:', error);
+          setResults([]);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      
+      const debouncedFn = debounce(search, 300);
+      debouncedFn();
+      
+      // Cleanup
+      return () => {
+        debouncedFn.cancel();
+      };
+    },
+    [] // No dependencies needed as we're using closure
   );
 
   useEffect(() => {
-    handleSearch(query);
-  }, [query, handleSearch]);
+    const cleanup = debouncedSearch(query);
+    return cleanup;
+  }, [query, debouncedSearch]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

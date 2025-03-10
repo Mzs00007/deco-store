@@ -51,11 +51,10 @@ export default function Toast({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed bottom-4 right-4 flex items-center space-x-2 px-4 py-2 rounded-lg shadow-lg z-50 text-white"
+          className={`${colors[type]} fixed bottom-4 right-4 flex items-center space-x-2 px-4 py-2 rounded-lg shadow-lg z-50 text-white`}
           initial={{ opacity: 0, y: 50, x: 50 }}
           animate={{ opacity: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, y: 50, x: 50 }}
-          className={`${colors[type]} fixed bottom-4 right-4 flex items-center space-x-2 px-4 py-2 rounded-lg shadow-lg z-50 text-white`}
         >
           <Icon className="w-5 h-5" />
           <span>{message}</span>
