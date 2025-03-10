@@ -1,0 +1,52 @@
+{
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "about": "About",
+    "cart": "Cart",
+    "wishlist": "Wishlist"
+  },
+  "header": {
+    "search": "Search",
+    "searchPlaceholder": "Search products...",
+    "profile": "Profile",
+    "orders": "Orders",
+    "settings": "Settings",
+    "logout": "Logout",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "home": {
+    "heroTitle": "Transform Your Space",
+    "heroDescription": "Discover unique home decorations that reflect your style and personality.",
+    "shopNow": "Shop Now"
+  },
+  "footer": {
+    "description": "Your one-stop shop for beautiful home decorations.",
+    "links": "Quick Links",
+    "contact": "Contact Us",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "search": "Search",
+    "retry": "Try again",
+    "save": "Save",
+    "saving": "Saving...",
+    "signOut": "Sign out"
+  },
+  "errors": {
+    "emptySearch": "Please enter a search term",
+    "searchFailed": "Failed to perform search",
+    "unexpectedError": "An unexpected error occurred",
+    "footerLoadFailed": "Failed to load footer",
+    "heroLoadFailed": "Failed to load hero section"
+  },
+  "categories": {
+    "wall-art": "Wall Art",
+    "vases": "Vases",
+    "cushions": "Cushions",
+    "lighting": "Lighting"
+  }
+} 

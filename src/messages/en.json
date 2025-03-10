@@ -1,0 +1,46 @@
+{
+  "common": {
+    "error": "An error occurred",
+    "tryAgain": "Try again",
+    "loading": "Loading..."
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "tabs": {
+      "analytics": "Analytics",
+      "admins": "Admins"
+    },
+    "analytics": {
+      "revenue": "Total Revenue",
+      "orders": "Total Orders",
+      "customers": "Total Customers",
+      "conversion": "Conversion Rate"
+    },
+    "admins": {
+      "title": "Admin Management",
+      "description": "Manage administrator access and roles",
+      "columns": {
+        "admin": "Admin",
+        "role": "Role",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      }
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to Wishlist",
+    "removeFromWishlist": "Remove from Wishlist",
+    "tabs": {
+      "description": "Description",
+      "specifications": "Specifications",
+      "reviews": "Reviews"
+    }
+  }
+} 
