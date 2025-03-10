@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
+import { motion, AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
 import { useSession } from '@/lib/auth';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import AdminManager from '@/components/admin/AdminManager';
@@ -106,9 +106,9 @@ export default function AdminPage() {
 
         {/* Content */}
         <ErrorBoundary fallback={ErrorFallback}>
-          <AnimatePresence mode="wait" initial={false}>
+          <m.div>
             {activeTab === 'analytics' ? (
-              <motion.div
+              <m.div
                 key="analytics"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -116,9 +116,9 @@ export default function AdminPage() {
                 transition={{ duration: 0.2 }}
               >
                 <Analytics />
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.div
+              <m.div
                 key="admin"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -126,9 +126,9 @@ export default function AdminPage() {
                 transition={{ duration: 0.2 }}
               >
                 <AdminManager />
-              </motion.div>
+              </m.div>
             )}
-          </AnimatePresence>
+          </m.div>
         </ErrorBoundary>
       </div>
     </LazyMotion>
