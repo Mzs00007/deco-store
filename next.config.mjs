@@ -1,7 +1,26 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
+  images: {
+    domains: [
+      'firebasestorage.googleapis.com',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com'
+    ],
+    formats: ['image/avif', 'image/webp']
+  },
+  experimental: {
+    serverActions: true
+  },
+  typescript: {
+    ignoreBuildErrors: false
+  },
+  eslint: {
+    ignoreDuringBuilds: false
+  }
 };
 
-export default nextConfig; 
+export default withNextIntl(nextConfig); 
