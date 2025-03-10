@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 interface AccordionItem {
@@ -40,54 +40,56 @@ export default function Accordion({
   const isExpanded = (itemId: string) => expandedItems.includes(itemId);
 
   return (
-    <div className="divide-y divide-gray-200 dark:divide-gray-700">
-      {items.map((item) => (
-        <div key={item.id} className="py-2">
-          <button
-            className="w-full flex items-center justify-between py-2 text-left"
-            onClick={() => toggleItem(item.id)}
-          >
-            <span className="text-sm font-medium text-gray-900 dark:text-white">
-              {item.title}
-            </span>
-            <motion.div
-              animate={{ rotate: isExpanded(item.id) ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
+    <LazyMotion features={domAnimation}>
+      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+        {items.map((item) => (
+          <div key={item.id} className="py-2">
+            <button
+              className="w-full flex items-center justify-between py-2 text-left"
+              onClick={() => toggleItem(item.id)}
             >
-              <ChevronDownIcon className="w-5 h-5 text-gray-500" />
-            </motion.div>
-          </button>
-
-          <AnimatePresence initial={false}>
-            {isExpanded(item.id) && (
+              <span className="text-sm font-medium text-gray-900 dark:text-white">
+                {item.title}
+              </span>
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ 
-                  height: 'auto', 
-                  opacity: 1,
-                  transition: {
-                    height: { duration: 0.3 },
-                    opacity: { duration: 0.2, delay: 0.1 }
-                  }
-                }}
-                exit={{ 
-                  height: 0, 
-                  opacity: 0,
-                  transition: {
-                    height: { duration: 0.3 },
-                    opacity: { duration: 0.2 }
-                  }
-                }}
-                className="overflow-hidden"
+                animate={{ rotate: isExpanded(item.id) ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
               >
-                <div className="py-2 text-sm text-gray-600 dark:text-gray-400">
-                  {item.content}
-                </div>
+                <ChevronDownIcon className="w-5 h-5 text-gray-500" />
               </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      ))}
-    </div>
+            </button>
+
+            <AnimatePresence mode="wait">
+              {isExpanded(item.id) && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ 
+                    height: 'auto', 
+                    opacity: 1,
+                    transition: {
+                      height: { duration: 0.3 },
+                      opacity: { duration: 0.2, delay: 0.1 }
+                    }
+                  }}
+                  exit={{ 
+                    height: 0, 
+                    opacity: 0,
+                    transition: {
+                      height: { duration: 0.3 },
+                      opacity: { duration: 0.2 }
+                    }
+                  }}
+                  className="overflow-hidden"
+                >
+                  <div className="py-2 text-sm text-gray-600 dark:text-gray-400">
+                    {item.content}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ))}
+      </div>
+    </LazyMotion>
   );
 } 

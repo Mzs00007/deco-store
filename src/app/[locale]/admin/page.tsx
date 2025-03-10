@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { motion, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import { useSession } from '@/lib/auth';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import AdminManager from '@/components/admin/AdminManager';
@@ -71,45 +72,65 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-        {t('admin.title')}
-      </h1>
+    <LazyMotion features={domAnimation}>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+          {t('admin.title')}
+        </h1>
 
-      {/* Tabs */}
-      <div className="border-b border-gray-200 dark:border-gray-700 mb-8">
-        <nav className="-mb-px flex space-x-8">
-          <button
-            className={`${
-              activeTab === 'analytics'
-                ? 'border-accent-600 text-accent-600'
-                : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-            onClick={() => setActiveTab('analytics')}
-          >
-            {t('admin.tabs.analytics')}
-          </button>
-          <button
-            className={`${
-              activeTab === 'admins'
-                ? 'border-accent-600 text-accent-600'
-                : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-            onClick={() => setActiveTab('admins')}
-          >
-            {t('admin.tabs.admins')}
-          </button>
-        </nav>
+        {/* Tabs */}
+        <div className="border-b border-gray-200 dark:border-gray-700 mb-8">
+          <nav className="-mb-px flex space-x-8">
+            <button
+              className={`${
+                activeTab === 'analytics'
+                  ? 'border-accent-600 text-accent-600'
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'
+              } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+              onClick={() => setActiveTab('analytics')}
+            >
+              {t('admin.tabs.analytics')}
+            </button>
+            <button
+              className={`${
+                activeTab === 'admins'
+                  ? 'border-accent-600 text-accent-600'
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'
+              } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+              onClick={() => setActiveTab('admins')}
+            >
+              {t('admin.tabs.admins')}
+            </button>
+          </nav>
+        </div>
+
+        {/* Content */}
+        <ErrorBoundary fallback={ErrorFallback}>
+          <AnimatePresence mode="wait" initial={false}>
+            {activeTab === 'analytics' ? (
+              <motion.div
+                key="analytics"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Analytics />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="admin"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.2 }}
+              >
+                <AdminManager />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </ErrorBoundary>
       </div>
-
-      {/* Content */}
-      <ErrorBoundary fallback={ErrorFallback}>
-        {activeTab === 'analytics' ? (
-          <Analytics />
-        ) : (
-          <AdminManager />
-        )}
-      </ErrorBoundary>
-    </div>
+    </LazyMotion>
   );
 } 
