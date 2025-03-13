@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 interface AccordionItem {
@@ -51,17 +51,17 @@ export default function Accordion({
               <span className="text-sm font-medium text-gray-900 dark:text-white">
                 {item.title}
               </span>
-              <motion.div
+              <m.div
                 animate={{ rotate: isExpanded(item.id) ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
               >
                 <ChevronDownIcon className="w-5 h-5 text-gray-500" />
-              </motion.div>
+              </m.div>
             </button>
 
-            <AnimatePresence mode="wait">
+            <m.div>
               {isExpanded(item.id) && (
-                <motion.div
+                <m.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ 
                     height: 'auto', 
@@ -84,9 +84,9 @@ export default function Accordion({
                   <div className="py-2 text-sm text-gray-600 dark:text-gray-400">
                     {item.content}
                   </div>
-                </motion.div>
+                </m.div>
               )}
-            </AnimatePresence>
+            </m.div>
           </div>
         ))}
       </div>

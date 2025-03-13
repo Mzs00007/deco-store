@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 
 interface Tab {
   id: string;
@@ -48,24 +48,24 @@ export default function Tabs({
   };
 
   return (
-    <div>
-      {/* Tab List */}
-      <div className={variants[variant].tabList}>
-        {tabs.map((tab) => (
-          <motion.button
-            key={tab.id}
-            className={variants[variant].tab(tab.id === currentTab)}
-            onClick={() => onChange(tab.id)}
-            whileTap={{ scale: 0.95 }}
-          >
-            {tab.label}
-          </motion.button>
-        ))}
-      </div>
+    <LazyMotion features={domAnimation}>
+      <div>
+        {/* Tab List */}
+        <div className={variants[variant].tabList}>
+          {tabs.map((tab) => (
+            <motion.button
+              key={tab.id}
+              className={variants[variant].tab(tab.id === currentTab)}
+              onClick={() => onChange(tab.id)}
+              whileTap={{ scale: 0.95 }}
+            >
+              {tab.label}
+            </motion.button>
+          ))}
+        </div>
 
-      {/* Tab Content */}
-      <div className="mt-4">
-        <AnimatePresence mode="wait">
+        {/* Tab Content */}
+        <div className="mt-4">
           {tabs.map((tab) => (
             tab.id === currentTab && (
               <motion.div
@@ -79,8 +79,8 @@ export default function Tabs({
               </motion.div>
             )
           ))}
-        </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </LazyMotion>
   );
 } 

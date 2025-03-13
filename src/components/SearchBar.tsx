@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 import debounce from 'lodash/debounce';
@@ -71,28 +71,28 @@ export default function SearchBar() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-xl" ref={inputRef}>
-      <div className="relative">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          placeholder={t('search.placeholder')}
-          className="w-full px-4 py-2 pl-10 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-DEFAULT dark:text-white"
-        />
-        <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-        
-        {isLoading && (
-          <motion.div
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 border-2 border-accent-DEFAULT border-t-transparent rounded-full"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+    <LazyMotion features={domAnimation}>
+      <div className="relative w-full max-w-xl" ref={inputRef}>
+        <div className="relative">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            placeholder={t('search.placeholder')}
+            className="w-full px-4 py-2 pl-10 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-DEFAULT dark:text-white"
           />
-        )}
-      </div>
+          <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          
+          {isLoading && (
+            <motion.div
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 border-2 border-accent-DEFAULT border-t-transparent rounded-full"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+          )}
+        </div>
 
-      <AnimatePresence>
         {isFocused && results.length > 0 && (
           <motion.div
             className="absolute w-full mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50"
@@ -116,7 +116,7 @@ export default function SearchBar() {
             ))}
           </motion.div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </LazyMotion>
   );
 } 

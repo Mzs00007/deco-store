@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { useSession } from '@/lib/auth';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import AdminManager from '@/components/admin/AdminManager';

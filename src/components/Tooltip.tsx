@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 
 interface TooltipProps {
   text: string;
@@ -53,13 +53,13 @@ export default function Tooltip({
   };
 
   return (
-    <div 
-      className="relative inline-block"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {children}
-      <AnimatePresence>
+    <LazyMotion features={domAnimation}>
+      <div 
+        className="relative inline-block"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {children}
         {isVisible && (
           <motion.div
             className={`absolute z-50 px-2 py-1 text-sm text-white bg-gray-900 rounded shadow-lg whitespace-nowrap ${positions[position].className}`}
@@ -71,7 +71,7 @@ export default function Tooltip({
             {text}
           </motion.div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </LazyMotion>
   );
 } 

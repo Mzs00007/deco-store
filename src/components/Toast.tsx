@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { 
   CheckCircleIcon,
   ExclamationCircleIcon,
@@ -47,27 +47,27 @@ export default function Toast({
     }
   }, [isVisible, duration, onClose]);
 
+  if (!isVisible) return null;
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          className={`${colors[type]} fixed bottom-4 right-4 flex items-center space-x-2 px-4 py-2 rounded-lg shadow-lg z-50 text-white`}
-          initial={{ opacity: 0, y: 50, x: 50 }}
-          animate={{ opacity: 1, y: 0, x: 0 }}
-          exit={{ opacity: 0, y: 50, x: 50 }}
+    <LazyMotion features={domAnimation}>
+      <motion.div
+        className={`${colors[type]} fixed bottom-4 right-4 flex items-center space-x-2 px-4 py-2 rounded-lg shadow-lg z-50 text-white`}
+        initial={{ opacity: 0, y: 50, x: 50 }}
+        animate={{ opacity: 1, y: 0, x: 0 }}
+        exit={{ opacity: 0, y: 50, x: 50 }}
+      >
+        <Icon className="w-5 h-5" />
+        <span>{message}</span>
+        <motion.button
+          onClick={onClose}
+          className="ml-2 hover:opacity-80"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
-          <Icon className="w-5 h-5" />
-          <span>{message}</span>
-          <motion.button
-            onClick={onClose}
-            className="ml-2 hover:opacity-80"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <XMarkIcon className="w-5 h-5" />
-          </motion.button>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          <XMarkIcon className="w-5 h-5" />
+        </motion.button>
+      </motion.div>
+    </LazyMotion>
   );
 } 

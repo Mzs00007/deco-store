@@ -1,0 +1,19 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "products": "Productos",
+    "categories": "Categorías",
+    "about": "Acerca de"
+  },
+  "header": {
+    "search": "Buscar",
+    "profile": "Perfil",
+    "orders": "Pedidos",
+    "settings": "Configuración"
+  },
+  "errors": {
+    "emptySearch": "Por favor ingrese un término de búsqueda",
+    "searchFailed": "La búsqueda falló. Por favor intente de nuevo.",
+    "unexpectedError": "Ocurrió un error inesperado"
+  }
+} 

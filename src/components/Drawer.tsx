@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface DrawerProps {
@@ -55,50 +55,52 @@ export default function Drawer({
   }, [isOpen]);
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            className="fixed inset-0 bg-black/50 z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-          />
+    <LazyMotion features={domAnimation}>
+      <m.div>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <m.div
+              className="fixed inset-0 bg-black/50 z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+            />
 
-          {/* Drawer */}
-          <motion.div
-            className={`fixed top-0 h-full ${sizes[size]} bg-white dark:bg-gray-800 shadow-xl z-50 ${positions[position].drawer}`}
-            initial={positions[position].initial}
-            animate={positions[position].animate}
-            exit={positions[position].exit}
-            transition={{ type: 'spring', damping: 20 }}
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-              {title && (
-                <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
-                  {title}
-                </h2>
-              )}
-              <motion.button
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                onClick={onClose}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <XMarkIcon className="w-6 h-6" />
-              </motion.button>
-            </div>
+            {/* Drawer */}
+            <m.div
+              className={`fixed top-0 h-full ${sizes[size]} bg-white dark:bg-gray-800 shadow-xl z-50 ${positions[position].drawer}`}
+              initial={positions[position].initial}
+              animate={positions[position].animate}
+              exit={positions[position].exit}
+              transition={{ type: 'spring', damping: 20 }}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                {title && (
+                  <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
+                    {title}
+                  </h2>
+                )}
+                <m.button
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  onClick={onClose}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <XMarkIcon className="w-6 h-6" />
+                </m.button>
+              </div>
 
-            {/* Content */}
-            <div className="p-4 h-[calc(100%-4rem)] overflow-y-auto">
-              {children}
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+              {/* Content */}
+              <div className="p-4 h-[calc(100%-4rem)] overflow-y-auto">
+                {children}
+              </div>
+            </m.div>
+          </>
+        )}
+      </m.div>
+    </LazyMotion>
   );
 } 

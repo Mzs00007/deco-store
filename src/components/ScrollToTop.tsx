@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { ArrowUpIcon } from '@heroicons/react/24/outline';
 
 export default function ScrollToTop() {
@@ -30,21 +30,21 @@ export default function ScrollToTop() {
     });
   };
 
+  if (!isVisible) return null;
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.button
-          className="fixed bottom-8 right-8 p-3 bg-accent-DEFAULT text-white rounded-full shadow-lg z-50"
-          onClick={scrollToTop}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <ArrowUpIcon className="w-6 h-6" />
-        </motion.button>
-      )}
-    </AnimatePresence>
+    <LazyMotion features={domAnimation}>
+      <motion.button
+        className="fixed bottom-8 right-8 p-3 bg-accent-DEFAULT text-white rounded-full shadow-lg z-50"
+        onClick={scrollToTop}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <ArrowUpIcon className="w-6 h-6" />
+      </motion.button>
+    </LazyMotion>
   );
 } 
